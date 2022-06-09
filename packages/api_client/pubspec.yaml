@@ -1,0 +1,21 @@
+name: api_client
+description: Api client that allows fetching photos and comments
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.16.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^0.13.4
+  json_annotation: ^4.5.0
+
+dev_dependencies:
+  build_runner: ^2.0.3
+  flutter_test:
+    sdk: flutter
+  json_serializable: ^6.0.0
+  mocktail: ^0.3.0
+  very_good_analysis: ^2.4.0
