@@ -5,9 +5,18 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import 'package:comments_repository/comments_repository.dart';
+import 'package:photos_repository/photos_repository.dart';
 import 'package:tcb_challenge/app/app.dart';
 import 'package:tcb_challenge/bootstrap.dart';
 
 void main() {
-  bootstrap(() => const App());
+  bootstrap(() async {
+    final photosRepository = PhotosRepository();
+    final commentsRepository = CommentsRepository();
+    return App(
+      photosRepository: photosRepository,
+      commentsRepository: commentsRepository,
+    );
+  });
 }
