@@ -1,0 +1,8 @@
+{
+  "flutterSdkVersion": "2.10.2",
+  "flavors": {
+    "development": "2.10.2",
+    "staging": "2.10.2",
+    "production": "2.10.2"
+  }
+}
