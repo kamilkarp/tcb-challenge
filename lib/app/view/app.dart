@@ -10,7 +10,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tcb_challenge/l10n/l10n.dart';
 
 class App extends StatelessWidget {
-  const App({super.key});
+  const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class App extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      home:  Container(),
+      home: const Scaffold(),
     );
   }
 }
