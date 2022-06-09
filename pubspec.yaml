@@ -8,6 +8,9 @@ environment:
 
 dependencies:
   bloc: ^8.0.3
+  comments_repository:
+    path: packages/comments_repository
+  equatable: ^2.0.3
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
