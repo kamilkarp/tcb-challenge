@@ -5,5 +5,9 @@
     "commentsAppBarTitle": "Comments",
     "scrollDownToFetchCommentsText": "Scroll down to fetch more comments",
     "noCommentsInAlbumsText": "No comments in posts",
-    "tapToRetryText": "Tap to retry"
+    "tapToRetryText": "Tap to retry",
+    "photosAppBarTitle": "Photos",
+    "noPhotosInAlbumsText": "No photos in albums",
+    "scrollDownToFetchPhotosText": "Scroll down to fetch more photos",
+    "downloadAgainPhotoImageTooltip": "Download again"
 }
