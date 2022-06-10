@@ -71,6 +71,24 @@ void main() {
         ),
       ).called(1);
     });
+
+    testWidgets('fetches comments on start', (tester) async {
+      await tester.pumpWidget(
+        App(
+          commentsRepository: commentsRepository,
+          photosRepository: photosRepository,
+        ),
+      );
+      await tester.pump();
+      expect(find.byType(AppView), findsOneWidget);
+
+      verify(
+        () => commentsRepository.fetchComments(
+          startIndex: any(named: 'startIndex'),
+          limit: any(named: 'limit'),
+        ),
+      ).called(1);
+    });
   });
 
   group('AppView', () {

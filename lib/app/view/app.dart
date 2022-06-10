@@ -42,6 +42,7 @@ class App extends StatelessWidget {
         providers: [
           BlocProvider(create: (_) => AppBloc()),
           BlocProvider(
+            lazy: false,
             create: (_) => CommentsBloc(commentsRepository: _commentsRepository)
               ..add(CommentsFetch()),
           ),
