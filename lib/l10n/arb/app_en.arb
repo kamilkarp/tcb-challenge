@@ -1,5 +1,9 @@
 {
     "@@locale": "en",
     "photosBottomNavbarTitle": "Photos",
-    "commentsBottomNavbarTitle": "Comments"
+    "commentsBottomNavbarTitle": "Comments",
+    "commentsAppBarTitle": "Comments",
+    "scrollDownToFetchCommentsText": "Scroll down to fetch more comments",
+    "noCommentsInAlbumsText": "No comments in posts",
+    "tapToRetryText": "Tap to retry"
 }
