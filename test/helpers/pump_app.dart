@@ -9,6 +9,7 @@ import 'dart:collection';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:comments_repository/comments_repository.dart';
+import 'package:connectivity_repository/connectivity_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -28,6 +29,9 @@ class MockAppBloc extends MockBloc<AppEvent, AppState> implements AppBloc {
 class MockPhotosRepository extends Mock implements PhotosRepository {}
 
 class MockCommentsRepository extends Mock implements CommentsRepository {}
+
+class MockConnectivityRepository extends Mock
+    implements ConnectivityRepository {}
 
 class MockCommentsBloc extends MockBloc<CommentsEvent, CommentsState>
     implements CommentsBloc {
@@ -60,6 +64,7 @@ extension PumpApp on WidgetTester {
     CommentsBloc? commentsBloc,
     CommentsRepository? commentsRepository,
     PhotosRepository? photosRepository,
+    ConnectivityRepository? connectivityRepository,
     NavigatorObserver? navigatorObserver,
   }) async {
     registerFallbackValues();
@@ -72,6 +77,9 @@ extension PumpApp on WidgetTester {
           ),
           RepositoryProvider.value(
             value: commentsRepository ?? MockCommentsRepository(),
+          ),
+          RepositoryProvider.value(
+            value: connectivityRepository ?? MockConnectivityRepository(),
           ),
         ],
         child: MultiBlocProvider(

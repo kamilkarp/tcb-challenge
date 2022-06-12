@@ -7,6 +7,7 @@
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:comments_repository/comments_repository.dart';
+import 'package:connectivity_repository/connectivity_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:photos_repository/photos_repository.dart';
@@ -20,6 +21,9 @@ class MockPhotosRepository extends Mock implements PhotosRepository {}
 
 class MockCommentsRepository extends Mock implements CommentsRepository {}
 
+class MockConnectivityRepository extends Mock
+    implements ConnectivityRepository {}
+
 class MockAppBloc extends MockBloc<AppEvent, AppState> implements AppBloc {}
 
 class FakeAppEvent extends Fake implements AppEvent {}
@@ -29,6 +33,7 @@ class FakeAppState extends Fake implements AppState {}
 void main() {
   late PhotosRepository photosRepository;
   late CommentsRepository commentsRepository;
+  late ConnectivityRepository connectivityRepository;
   late AppBloc appBloc;
 
   setUpAll(() {
@@ -39,15 +44,20 @@ void main() {
   setUp(() {
     photosRepository = MockPhotosRepository();
     commentsRepository = MockCommentsRepository();
+    connectivityRepository = MockConnectivityRepository();
     appBloc = MockAppBloc();
+
+    when(() => connectivityRepository.onConnectivityChanged)
+        .thenAnswer((_) => Stream.fromIterable([ConnectivityStatus.connected]));
   });
 
   group('App', () {
-    testWidgets('renders CounterPage', (tester) async {
+    testWidgets('renders AppView', (tester) async {
       await tester.pumpWidget(
         App(
           commentsRepository: commentsRepository,
           photosRepository: photosRepository,
+          connectivityRepository: connectivityRepository,
         ),
       );
       await tester.pump();
@@ -59,6 +69,7 @@ void main() {
         App(
           commentsRepository: commentsRepository,
           photosRepository: photosRepository,
+          connectivityRepository: connectivityRepository,
         ),
       );
       await tester.pump();
@@ -77,6 +88,7 @@ void main() {
         App(
           commentsRepository: commentsRepository,
           photosRepository: photosRepository,
+          connectivityRepository: connectivityRepository,
         ),
       );
       await tester.pump();
