@@ -7,6 +7,7 @@
 
 import 'package:app_ui/app_ui.dart';
 import 'package:comments_repository/comments_repository.dart';
+import 'package:connectivity_repository/connectivity_repository.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,17 +23,23 @@ class App extends StatelessWidget {
     Key? key,
     required PhotosRepository photosRepository,
     required CommentsRepository commentsRepository,
+    required ConnectivityRepository connectivityRepository,
   })  : _photosRepository = photosRepository,
         _commentsRepository = commentsRepository,
+        _connectivityRepository = connectivityRepository,
         super(key: key);
 
   final PhotosRepository _photosRepository;
   final CommentsRepository _commentsRepository;
+  final ConnectivityRepository _connectivityRepository;
 
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
+        RepositoryProvider<ConnectivityRepository>.value(
+          value: _connectivityRepository,
+        ),
         RepositoryProvider<PhotosRepository>.value(value: _photosRepository),
         RepositoryProvider<CommentsRepository>.value(
           value: _commentsRepository,
