@@ -1,0 +1,82 @@
+name: Push flow
+
+on: 
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Test and build
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+          cache: 'gradle'
+
+      - run: git fetch --prune --unshallow --tags
+
+      - uses: kuhnroyal/flutter-fvm-config-action@v1
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+          cache: true
+
+      - run: flutter --version
+
+      - name: Install Dependencies
+        run: flutter packages get
+
+      - name: Format
+        run: flutter format --set-exit-if-changed lib test
+
+      - name: Run build_runner
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+      
+      - name: Run build_runner on packages
+        run: |
+          cd packages/api_client
+          flutter pub get && flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings lib test
+
+      - name: Run tests
+        run: flutter test --no-pub --coverage --test-randomize-ordering-seed random
+
+      - name: Check Code Coverage
+        uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
+        with:
+          min_coverage: 95
+
+      - name: Build ios
+
+        run: | 
+          flutter pub get
+          flutter build ios \
+          --release --flavor production --target lib/main_production.dart --no-codesign
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-artifacts
+          path: build/ios/iphoneos
+
+      - name: Build android
+
+        run: | 
+          flutter pub get
+          flutter build apk \
+          --flavor production --target lib/main_production.dart --split-per-abi
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-artifacts
+          path: build/app/outputs/apk/production/release
