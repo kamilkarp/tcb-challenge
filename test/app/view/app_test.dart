@@ -64,6 +64,22 @@ void main() {
       expect(find.byType(AppView), findsOneWidget);
     });
 
+    testWidgets('listens for Internet connection on start', (tester) async {
+      await tester.pumpWidget(
+        App(
+          commentsRepository: commentsRepository,
+          photosRepository: photosRepository,
+          connectivityRepository: connectivityRepository,
+        ),
+      );
+      await tester.pump();
+      expect(find.byType(AppView), findsOneWidget);
+
+      verify(
+        () => connectivityRepository.onConnectivityChanged.listen(any()),
+      ).called(1);
+    });
+
     testWidgets('fetches photos on start', (tester) async {
       await tester.pumpWidget(
         App(

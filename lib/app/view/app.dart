@@ -15,6 +15,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:photos_repository/photos_repository.dart';
 import 'package:tcb_challenge/app/app.dart';
 import 'package:tcb_challenge/comments/comments.dart';
+import 'package:tcb_challenge/connectivity/connectivity.dart';
 import 'package:tcb_challenge/l10n/l10n.dart';
 import 'package:tcb_challenge/photos/photos.dart';
 
@@ -47,6 +48,12 @@ class App extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(
+            lazy: false,
+            create: (_) => ConnectivityBloc(
+              connectivityRepository: _connectivityRepository,
+            ),
+          ),
           BlocProvider(create: (_) => AppBloc()),
           BlocProvider(
             lazy: false,

@@ -18,6 +18,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:photos_repository/photos_repository.dart';
 import 'package:tcb_challenge/app/app.dart';
 import 'package:tcb_challenge/comments/comments.dart';
+import 'package:tcb_challenge/connectivity/connectivity.dart';
 import 'package:tcb_challenge/l10n/l10n.dart';
 import 'package:tcb_challenge/photos/photos.dart';
 
@@ -47,6 +48,13 @@ class MockPhotosBloc extends MockBloc<PhotosEvent, PhotosState>
   PhotosState get state => const PhotosState();
 }
 
+class MockConnectivityBloc
+    extends MockBloc<ConnectivityEvent, ConnectivityState>
+    implements ConnectivityBloc {
+  @override
+  ConnectivityState get state => ConnectivityState.connected;
+}
+
 class FakeAppEvent extends Fake implements AppEvent {}
 
 class FakeAppState extends Fake implements AppState {}
@@ -62,6 +70,7 @@ extension PumpApp on WidgetTester {
     AppBloc? appBloc,
     PhotosBloc? photosBloc,
     CommentsBloc? commentsBloc,
+    ConnectivityBloc? connectivityBloc,
     CommentsRepository? commentsRepository,
     PhotosRepository? photosRepository,
     ConnectivityRepository? connectivityRepository,
@@ -84,6 +93,9 @@ extension PumpApp on WidgetTester {
         ],
         child: MultiBlocProvider(
           providers: [
+            BlocProvider.value(
+              value: connectivityBloc ?? MockConnectivityBloc(),
+            ),
             BlocProvider.value(value: appBloc ?? MockAppBloc()),
             BlocProvider.value(value: photosBloc ?? MockPhotosBloc()),
             BlocProvider.value(value: commentsBloc ?? MockCommentsBloc()),
