@@ -1,0 +1,51 @@
+name: Pull request flow
+
+on: 
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: git fetch --prune --unshallow --tags
+
+      - uses: kuhnroyal/flutter-fvm-config-action@v1
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+          cache: true
+
+      - run: flutter --version
+
+      - name: Install Dependencies
+        run: flutter packages get
+
+      - name: Format
+        run: flutter format --set-exit-if-changed lib test
+
+      - name: Run build_runner
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+      
+      - name: Run build_runner on packages
+        run: |
+          cd packages/api_client
+          flutter pub get && flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings lib test
+
+      - name: Run tests
+        run: flutter test --no-pub --coverage --test-randomize-ordering-seed random
+
+      - name: Check Code Coverage
+        uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
+        with:
+          min_coverage: 95
