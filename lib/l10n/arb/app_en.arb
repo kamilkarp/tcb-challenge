@@ -9,5 +9,6 @@
     "photosAppBarTitle": "Photos",
     "noPhotosInAlbumsText": "No photos in albums",
     "scrollDownToFetchPhotosText": "Scroll down to fetch more photos",
-    "downloadAgainPhotoImageTooltip": "Download again"
+    "downloadAgainPhotoImageTooltip": "Download again",
+    "noInternetConnectionOverlayText": "No Internet connection"
 }
