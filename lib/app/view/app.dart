@@ -83,9 +83,11 @@ class AppView extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      home: FlowBuilder(
-        state: context.select((AppBloc bloc) => bloc.state.currentPage),
-        onGeneratePages: onGenerateAppViewPages,
+      home: ConnectivityOverlay(
+        child: FlowBuilder(
+          state: context.select((AppBloc bloc) => bloc.state.currentPage),
+          onGeneratePages: onGenerateAppViewPages,
+        ),
       ),
     );
   }
