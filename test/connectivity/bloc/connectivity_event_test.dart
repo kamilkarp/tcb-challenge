@@ -1,7 +1,4 @@
 // ignore_for_file: prefer_const_constructors
-
-import 'package:tcb_challenge/connectivity/bloc/connectivity_bloc.dart'
-    show _ConnectivityChanged;
 import 'package:tcb_challenge/connectivity/connectivity.dart';
 import 'package:test/test.dart';
 
